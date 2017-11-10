@@ -20,7 +20,7 @@ let validationModels = new Map();
 console.log(`size of map: ${validationModels.size}`)
 for (const specPath of specsPaths )
 {
-  let matchResult =testPath.match(regex); //replace with spec
+  let matchResult =specPath.match(regex); //replace with spec
   let resourceProvider = matchResult[1];
   let apiVersion = matchResult[2];
 
