@@ -59,7 +59,7 @@ exports.parseJsonFromFile = async function parseJsonFromFile(filepath) {
 };
 
 /**
- * Gets the name of the target branch to which the PR is sent. We are using the environment 
+ * Gets the name of the target branch to which the PR is sent. We are using the environment
  * variable provided by travis-ci. It is called TRAVIS_BRANCH. More info can be found here:
  * https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
  * If the environment variable is undefined then the method returns 'master' as the default value.
@@ -110,7 +110,7 @@ exports.getSourceBranch = function getSourceBranch() {
 };
 
 /**
- * Gets the PR number. We are using the environment 
+ * Gets the PR number. We are using the environment
  * variable provided by travis-ci. It is called TRAVIS_PULL_REQUEST. More info can be found here:
  * https://docs.travis-ci.com/user/environment-variables/#Convenience-Variables
  * @returns {string} PR number or 'undefined'.
@@ -127,10 +127,10 @@ exports.getPullRequestNumber = function getPullRequestNumber() {
 };
 
 /**
- * Gets the Repo name. We are using the environment 
+ * Gets the Repo name. We are using the environment
  * variable provided by travis-ci. It is called TRAVIS_REPO_SLUG. More info can be found here:
  * https://docs.travis-ci.com/user/environment-variables/#Convenience-Variables
- * @returns {string} PR number or 'undefined'.
+ * @returns {string} repo name or 'undefined'.
  */
 exports.getRepoName = function getRepoName() {
   let result = process.env['TRAVIS_REPO_SLUG'];
@@ -138,6 +138,16 @@ exports.getRepoName = function getRepoName() {
 
   return result;
 };
+
+// Retrieves Git Repository Url
+/**
+ * Gets the repo URL
+ * @returns {string} repo URL or 'undefined'
+ */
+exports.getRepoUrl = function getRepoUrl() {
+  let repoName = exports.getRepoName();
+  return `https://github.com/${repoName}`;
+}
 
 exports.getTimeStamp = function getTimeStamp() {
   // We pad each value so that sorted directory listings show the files in chronological order
@@ -232,7 +242,7 @@ exports.getFilesChangedInPR = function getFilesChangedInPR() {
         return true;
       });
       console.log(`>>>> Number of swaggers found in this PR: ${swaggerFilesInPR.length}`);
-      
+
       var deletedFiles = swaggerFilesInPR.filter(function(swaggerFile){
         return !fs.existsSync(swaggerFile);
       });
