@@ -16,7 +16,8 @@ let regex = /resource-manager\\(.*)\\(.*)\\.*/;
 let successThreshold = 90;
 let testPath = 'c:\\vladdb\\devdiv\\repos\\azure\\azure-rest-api-specs\\specification\\redis\\resource-manager\\Microsoft.Cache\\2017-02-01\\redis.json';
 
-var validationModels = new Map();
+let validationModels = new Map();
+console.log(`size of map: ${validationModels.size}`)
 for (const specPath of specsPaths )
 {
   let matchResult =testPath.match(regex); //replace with spec
@@ -31,6 +32,8 @@ for (const specPath of specsPaths )
   validationModels.get(resourceProvider).add(apiVersion);
 }
 
+console.log(`size of map:${validationModels.size}`);
+
 async function runScript() {
   // See whether script is in Travis CI context
   console.log(`isRunningInTraviCI: ${isRunningInTraviCI}`);
@@ -38,7 +41,10 @@ async function runScript() {
   let validationService = "http://vladdb-oav-docker.azurewebsites.net/validations";
 
   let resourceProvider = validationModels.keys().next().value;
+  console.log(`RP is: ${resourceProvider}`);
+
   let apiVersion = validationModels.get(resourceProvider).values().next().value;
+  console.log(`ApiVersion is: ${apiversion}`);
 
   let validationId  =JSON.parse(await request.post(validationService).form({
     repoUrl: repoUrl,
