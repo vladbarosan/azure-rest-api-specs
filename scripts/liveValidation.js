@@ -12,27 +12,11 @@ let duration = 30;
 let processingDelay = 10;
 let isRunningInTraviCI = process.env.MODE === 'LiveValidation' && process.env.PR_ONLY === 'true';
 let specsPaths = utils.getFilesChangedInPR();
-let regex = /resource-manager\\(.*)\\(.*)\\.*/;
+let regex = /resource-manager[\\|\/](.*)[\\|\/](.*)[\\|\/].*/;
 let successThreshold = 90;
 let testPath = 'c:\\vladdb\\devdiv\\repos\\azure\\azure-rest-api-specs\\specification\\redis\\resource-manager\\Microsoft.Cache\\2017-02-01\\redis.json';
 
 let validationModels = new Map();
-console.log(`size of map: ${validationModels.size}`)
-for (const specPath of specsPaths )
-{
-  let matchResult =specPath.match(regex); //replace with spec
-  let resourceProvider = matchResult[1];
-  let apiVersion = matchResult[2];
-
-  if (!validationModels.has(resourceProvider))
-  {
-    validationModels.set(resourceProvider, new Set());
-  }
-
-  validationModels.get(resourceProvider).add(apiVersion);
-}
-
-console.log(`size of map:${validationModels.size}`);
 
 async function runScript() {
   // See whether script is in Travis CI context
@@ -40,12 +24,32 @@ async function runScript() {
 
   let validationService = "http://vladdb-oav-docker.azurewebsites.net/validations";
 
+  console.log(`size of map: ${validationModels.size}`)
+  for (const specPath of specsPaths )
+  {
+    console.log(`spec path is : ${specPath}`);
+    let matchResult =specPath.match(regex); //replace with spec
+
+    console.log(`spec path is : ${JSON.stringify(matchResult)}`);
+
+    let resourceProvider = matchResult[1];
+    let apiVersion = matchResult[2];
+
+    if (!validationModels.has(resourceProvider))
+    {
+      validationModels.set(resourceProvider, new Set());
+    }
+
+    validationModels.get(resourceProvider).add(apiVersion);
+  }
+
   let resourceProvider = validationModels.keys().next().value;
   console.log(`RP is: ${resourceProvider}`);
 
   let apiVersion = validationModels.get(resourceProvider).values().next().value;
-  console.log(`ApiVersion is: ${apiversion}`);
+  console.log(`ApiVersion is: ${apiVersion}`);
 
+  console.log(`Making the request to the validation service...`);
   let validationId  =JSON.parse(await request.post(validationService).form({
     repoUrl: repoUrl,
     branch: branch,
@@ -54,13 +58,17 @@ async function runScript() {
     duration: duration
   })).validationId;
 
-  await timeout((duration+processingDelay)*1000);
   let validationResultUrl = `${validationService}/${validationId}`;
+  console.log(`Request done, results will be available at ${validationResultUrl} in ${duration} seconds...`);
+
+  await timeout((duration+processingDelay)*1000);
   let operationResults = JSON.parse(await request(validationResultUrl));
+
 
   let totalResults = operationResults.find( result => result.RowKey === "total");
   delete totalResults["PartitionKey"];
-  console.log(`Displaying results of validation session: ${validationId}`);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log(`results of validation: ${validationId}`);
 
   console.log(JSON.stringify(totalResults));
 
@@ -76,7 +84,7 @@ async function runScript() {
           failingOperations.push(operationResult.RowKey);
         }
   }
-
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   if(failingOperations.length > 0) {
     console.log(`The changes in the specs introduced by this PR potentially do not reflect the Service API.`);
     console.log(`The following operations have a success rate lower than ${successThreshold} percent:${JSON.stringify(failingOperations)}`);
