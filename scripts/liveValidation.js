@@ -22,7 +22,7 @@ async function runScript() {
   // See whether script is in Travis CI context
   console.log(`isRunningInTraviCI: ${isRunningInTraviCI}`);
 
-  let validationService = "http://vladdb-oav-docker.azurewebsites.net/validations";
+  let validationService = "http://oav-dev.azurewebsites.net/validations";
 
   console.log(`size of map: ${validationModels.size}`)
   for (const specPath of specsPaths )
