@@ -65,7 +65,7 @@ async function runScript() {
   let operationResults = JSON.parse(await request(validationResultUrl));
 
 
-  let totalResults = operationResults.find( result => result.RowKey === "total");
+  let totalResults = operationResults.find( result => operationResults.RowKey === "total");
   delete totalResults["PartitionKey"];
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   console.log(`results of validation: ${validationId}`);
