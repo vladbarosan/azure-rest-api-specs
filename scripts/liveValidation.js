@@ -8,7 +8,7 @@ const utils = require('../test/util/utils'),
     zlib = require('zlib');
 
 const repoUrl = utils.getSourceRepoUrl(),
-    validationService = "https://app.azure-devex-tools.com/api/validations",
+    validationService = "https://test.azure-devex-tools.com/api/validations",
     branch = utils.getSourceBranch(),
     processingDelay = 20,
     isRunningInTravisCI = process.env.MODE === 'liveValidation' && process.env.PR_ONLY === 'true',
@@ -19,7 +19,7 @@ const repoUrl = utils.getSourceRepoUrl(),
 
 let durationInSeconds = parseInt(process.env.LIVE_VALIDATION_DURATION_IN_MINUTES) * 60;
 if (isNaN(durationInSeconds)) {
-    durationInSeconds = 180;
+    durationInSeconds = 60;
 }
 
 async function runScript() {
@@ -139,7 +139,7 @@ traces
         zlib.deflate(query, (err, buffer) => {
             if (!err) {
                 let queryParams = buffer.toString('base64');
-                let analyticsLink = `https://analytics.applicationinsights.io/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourcegroups/openapi-platform-logs/components/openapiAI?q=${queryParams}&apptype=Node.JS&timespan=P1D`;
+                let analyticsLink = `https://analytics.applicationinsights.io/subscriptions/7127e532-e730-40dd-acda-0ca1105c1e55/resourcegroups/openapi-int/components/openapiAI?q=${queryParams}&apptype=Node.JS&timespan=P1D`;
                 resolve(analyticsLink);
             }
         });
