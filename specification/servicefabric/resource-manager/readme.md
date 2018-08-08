@@ -1,13 +1,13 @@
 # ServiceFabric
-    
+
 > see https://aka.ms/autorest
 
 This is the AutoRest configuration file for Service Fabric.
 
-
-
 ---
+
 ## Getting Started
+
 To build the SDK for ServiceFabricManagementClient, simply [Install AutoRest](https://aka.ms/autorest/install) and in this folder, run:
 
 > `autorest`
@@ -15,34 +15,43 @@ To build the SDK for ServiceFabricManagementClient, simply [Install AutoRest](ht
 To see additional help and options, run:
 
 > `autorest --help`
+
 ---
 
 ## Configuration
 
+### Basic Information
 
-
-### Basic Information 
 These are the global settings for the ServiceFabricManagementClient API.
 
 ``` yaml
 title: ServiceFabricManagementClient
 description: Service Fabric Management Client
 openapi-type: arm
-tag: package-2018-02
-
+tag: package-2019-01
 directive:
   - suppress: ListInOperationName
-    reason: Modifying the operation names would break the backwards compatibility of the API.
+    reason: >-
+      Modifying the operation names would break the backwards compatibility of
+      the API.
   - suppress: LongRunningResponseStatusCode
-    reason: The validation tools do not properly recognize 202 as a supported response code.
+    reason: >-
+      The validation tools do not properly recognize 202 as a supported response
+      code.
   - suppress: SummaryAndDescriptionMustNotBeSame
-    reason: There are a lot of APIs with missing summary content. While it is being worked on disabling this to ensure that we catch and fix other violations.
+    reason: >-
+      There are a lot of APIs with missing summary content. While it is being
+      worked on disabling this to ensure that we catch and fix other violations.
   - suppress: TrackedResourceListByImmediateParent
     reason: Proxy resources are not properly evaluated by the validation toolset.
   - suppress: DefinitionsPropertiesNamesCamelCase
-    reason: Modifying the operation names would break the backwards compatibility of the API.
+    reason: >-
+      Modifying the operation names would break the backwards compatibility of
+      the API.
   - suppress: EnumInsteadOfBoolean
-    reason: The boolean properties are actually boolean value in the Service Fabric's application model.
+    reason: >-
+      The boolean properties are actually boolean value in the Service Fabric's
+      application model.
   - suppress: TrackedResourceGetOperation
     reason: Proxy resources are not properly evaluated by the validation toolset.
   - suppress: TrackedResourcePatchOperation
@@ -52,14 +61,32 @@ directive:
   - suppress: TrackedResourceListBySubscription
     reason: Proxy resources are not properly evaluated by the validation toolset.
   - suppress: DescriptionAndTitleMissing
-    reason: There are a lot of APIs with missing titles. While it is being worked on disabling this to ensure that we catch and fix other violations.
+    reason: >-
+      There are a lot of APIs with missing titles. While it is being worked on
+      disabling this to ensure that we catch and fix other violations.
   - suppress: Example Validations
-    reason: There are open issues (bugs) in the validator affecting some of the examples and since there is no way to selectively disable the validation for a particular example or paths, all of the example validation is being turned off.
+    reason: >-
+      There are open issues (bugs) in the validator affecting some of the
+      examples and since there is no way to selectively disable the validation
+      for a particular example or paths, all of the example validation is being
+      turned off.
   - suppress: Example Validations
-    reason: There are open issues (bugs) in the validator affecting some of the examples and since there is no way to selectively disable the validation for a particular example or paths, all of the example validation is being turned off.
-
+    reason: >-
+      There are open issues (bugs) in the validator affecting some of the
+      examples and since there is no way to selectively disable the validation
+      for a particular example or paths, all of the example validation is being
+      turned off.
 ```
 
+
+### Tag: package-2019-01
+
+These settings apply only when `--tag=package-2019-01` is specified on the command line.
+
+```yaml $(tag) == 'package-2019-01'
+input-file:
+  - Microsoft.ServiceFabric/stable/2019-01-02/cluster.json
+```
 ### Tag: package-2018-02
 
 These settings apply only when `--tag=package-2018-02` is specified on the command line.
@@ -88,10 +115,9 @@ input-file:
 - Microsoft.ServiceFabric/stable/2016-09-01/servicefabric.json
 ```
 
-
 ---
-# Code Generation
 
+# Code Generation
 
 ## Swagger to SDK
 
@@ -108,7 +134,6 @@ swagger-to-sdk:
     after_scripts:
       - bundle install && rake arm:regen_all_profiles['azure_mgmt_service_fabric']
 ```
-
 
 ## C#
 
@@ -141,18 +166,18 @@ python:
   package-name: azure-mgmt-servicefabric
   clear-output-folder: true
 ```
+
 ``` yaml $(python) && $(python-mode) == 'update'
 python:
   no-namespace-folders: true
   output-folder: $(python-sdks-folder)/azure-mgmt-servicefabric/azure/mgmt/servicefabric
 ```
+
 ``` yaml $(python) && $(python-mode) == 'create'
 python:
   basic-setup-py: true
   output-folder: $(python-sdks-folder)/azure-mgmt-servicefabric
 ```
-
-
 
 ## Go
 
@@ -201,7 +226,6 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 output-folder: $(go-sdk-folder)/services/servicefabric/mgmt/2016-09-01/servicefabric
 ```
 
-
 ## Java
 
 These settings apply only when `--java` is specified on the command line.
@@ -249,5 +273,3 @@ java:
 regenerate-manager: true
 generate-interface: true
 ```
-
-
