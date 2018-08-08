@@ -3,7 +3,7 @@
     "subscriptionId": "00000000-0000-0000-0000-000000000000",
     "resourceGroupName": "resRg",
     "clusterName": "myCluster",
-    "api-version": "2018-02-01",
+    "api-version": "2019-01-02",
     "parameters": {
       "type": "Microsoft.ServiceFabric/clusters",
       "location": "eastus",
@@ -56,7 +56,7 @@
     "202": {
       "headers": {
         "Retry-After": "10",
-        "Location": "http://10.91.140.224/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.ServiceFabric/locations/eastus/operationResults/1ca6e48d-70ca-4e43-b652-3b0522f64d67?api-version=2018-02-01"
+        "Location": "http://10.91.140.224/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.ServiceFabric/locations/eastus/operationResults/1ca6e48d-70ca-4e43-b652-3b0522f64d67?api-version=2019-01-02"
       },
       "body": {
         "type": "Microsoft.ServiceFabric/clusters",
