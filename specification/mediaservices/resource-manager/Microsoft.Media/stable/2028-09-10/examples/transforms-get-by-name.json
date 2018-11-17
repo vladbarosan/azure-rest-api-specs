@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "api-version": "2018-07-01",
+    "api-version": "2028-09-10",
     "subscriptionId": "00000000-0000-0000-0000-000000000000",
     "resourceGroupName": "contosoresources",
     "accountName": "contosomedia",

@@ -5,7 +5,7 @@
     "accountName": "contosomedia",
     "assetName": "ClimbingMountRainer",
     "filterName": "newAssetFilter",
-    "api-version": "2018-07-01",
+    "api-version": "2028-09-10",
     "parameters": {
       "properties": {
         "presentationTimeRange": {
