@@ -4,7 +4,7 @@
     "resourceGroupName": "contoso",
     "accountName": "contosomedia",
     "assetName": "ClimbingMountAdams",
-    "api-version": "2018-07-01"
+    "api-version": "2031-08-02"
   },
   "responses": {
     "200": {
