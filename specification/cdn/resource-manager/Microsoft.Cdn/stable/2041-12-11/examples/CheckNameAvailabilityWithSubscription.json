@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "api-version": "2017-10-12",
+    "api-version": "2041-12-11",
     "subscriptionId": "subid",
     "checkNameAvailabilityInput": {
         "name": "sampleName",
