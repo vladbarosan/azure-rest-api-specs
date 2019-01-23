@@ -4,10 +4,10 @@
 
 This is the AutoRest configuration file for ContainerRegistry.
 
-
-
 ---
+
 ## Getting Started
+
 To build the SDK for ContainerRegistry, simply [Install AutoRest](https://aka.ms/autorest/install) and in this folder, run:
 
 > `autorest`
@@ -15,20 +15,29 @@ To build the SDK for ContainerRegistry, simply [Install AutoRest](https://aka.ms
 To see additional help and options, run:
 
 > `autorest --help`
+
 ---
 
 ## Configuration
 
-
-
 ### Basic Information
+
 These are the global settings for the ContainerRegistry API.
 
 ``` yaml
 openapi-type: arm
-tag: package-2018-09
+tag: package-2111-10
 ```
 
+
+### Tag: package-2111-10
+
+These settings apply only when `--tag=package-2111-10` is specified on the command line.
+
+```yaml $(tag) == 'package-2111-10'
+input-file:
+  - Microsoft.ContainerRegistry/stable/2111-10-12/containerregistry_build.json
+```
 ### Tag: package-2018-09
 
 These settings apply only when `--tag=package-2018-09` is specified on the command line.
@@ -85,10 +94,9 @@ input-file:
 - Microsoft.ContainerRegistry/preview/2016-06-27-preview/containerregistry.json
 ```
 
-
 ---
-# Code Generation
 
+# Code Generation
 
 ## Swagger to SDK
 
@@ -108,7 +116,6 @@ swagger-to-sdk:
     after_scripts:
       - bundle install && rake arm:regen_all_profiles['azure_mgmt_container_registry']
 ```
-
 
 ## C#
 
